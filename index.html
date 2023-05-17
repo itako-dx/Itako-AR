@@ -36,7 +36,7 @@
             width: 196px;
             height: 62px;
             position: absolute;
-            top: -20px;
+            top: -10px;
             left: 10px;
         }
         #logoTitle a {
@@ -126,6 +126,23 @@
                 type="pattern"
                 preset="custom"
                 url="assets/yomeiri.patt"
+                raycaster="objects: .clickable"
+                emitevents="true"
+                cursor="fuse: false; rayOrigin: mouse;"
+                id="markerB"
+            >
+                <a-image
+                    src="assets/yomeiri.jpeg"
+                    scale="1 1 1"
+                    class="clickable"
+                    rotation="-90 0 0"
+                    gesture-handler
+                ></a-image>
+            </a-marker>
+            <a-marker
+                type="pattern"
+                preset="custom"
+                url="assets/hanayome.patt"
                 raycaster="objects: .clickable"
                 emitevents="true"
                 cursor="fuse: false; rayOrigin: mouse;"
