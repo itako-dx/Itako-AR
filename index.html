@@ -1,37 +1,64 @@
 <!doctype html>
 <html lang="ja">
     <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, target-densityDpi=device-dpi" />
-        <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
+        <meta name="viewport" content="width=320, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, target-densityDpi=device-dpi" />
+        <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
         <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
         <script src="https://raw.githack.com/AR-js-org/studio-backend/master/src/modules/marker/tools/gesture-detector.js"></script>
         <script src="https://raw.githack.com/AR-js-org/studio-backend/master/src/modules/marker/tools/gesture-handler.js"></script>
+        <!-- Google tag (gtag.js) -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-FTJB0PT4B0"></script>
         <script>
-            AFRAME.registerComponent('videohandler', {
-                init: function () {
-                    var marker = this.el;
-                    this.vid = document.querySelector("#vid");
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
 
-                    marker.addEventListener('markerFound', function () {
-                        this.toggle = true;
-                        this.vid.play();
+            gtag('config', 'G-FTJB0PT4B0');
+        </script>
+        <script>
+            // TODO LOOP
+            const MAP_TO_VIDEO = {
+                "marker_suiden" : "#suiden",
+                "marker_hanayome": "#hanayome",
+                "marker_hanayome2": "#hanayome",
+                "marker_ayame_musume": "#ayame_musume",
+                "marker_kankou": "#kankou",
+                "marker_fuji": "#fuji",
+                "marker_night_iris": "#night_iris",
+            }
+            AFRAME.registerComponent('vidhandler', {
+                init: function () {
+                    const marker = this.el;
+
+                    if (!this.vid){
+                        this.vid={};
+                    }
+
+                    this.vid[marker.id] = document.querySelector(MAP_TO_VIDEO[marker.id]);
+                    marker.addEventListener('markerFound', function (event) {
+                        gtag('event', `Marker Found : ${event.target.id}`, {
+                        'event_category': 'AR Marker',
+                        'event_label': event.target.id});
+
+                        this.vid[event.target.id].play();
                     }.bind(this));
 
-                    marker.addEventListener('markerLost', function () {
-                        this.toggle = false;
-                        this.vid.pause();
+                    marker.addEventListener('markerLost', function (event) {
+                        this.vid[event.target.id].pause();
                     }.bind(this));
                 },
             });
+
+            function init () {
+                const marker = document.querySelector("#marker_ayame_chan");
+                marker.addEventListener('markerFound', function (event) {
+                    gtag('event', 'Marker Found : marker_ayame_chan', {
+                    'event_category': 'AR Marker',
+                    'event_label': 'marker_ayame_chan'});
+                });
+            }
         </script>
         <style type="text/css">
-        #header {
-            width: 100%;
-        }
-        #headerInner {
-            width: 100%;
-            min-width: 1200px;
-        }
         #logoTitle {
             width: 196px;
             height: 62px;
@@ -41,8 +68,8 @@
         }
         #logoTitle a {
             display: block;
-            width: 100%;
-            height: 100%;
+            width: 196px;
+            height: 62px;
             background: url(../assets/header/logo_title.png) 0 0 no-repeat;
             text-indent: 150%;
             overflow: hidden;
@@ -51,7 +78,7 @@
         </style>
     </head>
 
-    <body style="margin: 0; overflow: hidden;">
+    <body style="margin: 0; overflow: hidden;" onLoad="init();">
         <header id="header">
             <div id="headerInner">
                 <h1 id="logoTitle"><a href="/" title="TOP">TOP</a></h1>
@@ -65,11 +92,72 @@
             id="scene"
             embedded
             gesture-detector
+            device-orientation-permission-ui="enabled: false"
         >
             <a-assets>
                 <video
-                    id="vid"
+                    id="suiden"
                     src="assets/suiden.mp4"
+                    preload="auto"
+                    response-type="arraybuffer"
+                    loop
+                    crossorigin
+                    webkit-playsinline
+                    autoplay
+                    muted
+                    playsinline
+                ></video>
+                <video
+                    id="hanayome"
+                    src="assets/hanayome_ar.mp4"
+                    preload="auto"
+                    response-type="arraybuffer"
+                    loop
+                    crossorigin
+                    webkit-playsinline
+                    autoplay
+                    muted
+                    playsinline
+                ></video>
+                <video
+                    id="ayame_musume"
+                    src="assets/ayame_musume_ar.mp4"
+                    preload="auto"
+                    response-type="arraybuffer"
+                    loop
+                    crossorigin
+                    webkit-playsinline
+                    autoplay
+                    muted
+                    playsinline
+                ></video>
+                <video
+                    id="kankou"
+                    src="assets/kankou_ar.mp4"
+                    preload="auto"
+                    response-type="arraybuffer"
+                    loop
+                    crossorigin
+                    webkit-playsinline
+                    autoplay
+                    muted
+                    playsinline
+                ></video>
+                <video
+                    id="fuji"
+                    src="assets/fuji_ar.mp4"
+                    preload="auto"
+                    response-type="arraybuffer"
+                    loop
+                    crossorigin
+                    webkit-playsinline
+                    autoplay
+                    muted
+                    playsinline
+                ></video>
+                <video
+                    id="night_iris"
+                    src="assets/night_iris_ar.mp4"
                     preload="auto"
                     response-type="arraybuffer"
                     loop
@@ -84,8 +172,8 @@
             <a-marker
                 type="pattern"
                 preset="custom"
-                url="assets/suiden.patt"
-                videohandler
+                url="assets/hanayome.patt"
+                vidhandler
                 smooth="true"
                 smoothCount="10"
                 smoothTolerance="0.01"
@@ -93,10 +181,155 @@
                 raycaster="objects: .clickable"
                 emitevents="true"
                 cursor="fuse: false; rayOrigin: mouse;"
-                id="markerV"
+                id="marker_hanayome"
             >
                 <a-video
-                    src="#vid"
+                    src="#hanayome"
+                    scale="1.5 1 1"
+                    position="0 0.1 0"
+                    rotation="-90 0 0"
+                    class="clickable"
+                    gesture-handler
+                ></a-video>
+            </a-marker>
+
+            <a-marker
+                type="pattern"
+                preset="custom"
+                url="assets/hanayome_marker.patt"
+                vidhandler
+                smooth="true"
+                smoothCount="10"
+                smoothTolerance="0.01"
+                smoothThreshold="5"
+                raycaster="objects: .clickable"
+                emitevents="true"
+                cursor="fuse: false; rayOrigin: mouse;"
+                id="marker_hanayome2"
+            >
+                <a-video
+                    src="#hanayome"
+                    scale="1.5 1 1"
+                    position="0 0.1 0"
+                    rotation="-90 0 0"
+                    class="clickable"
+                    gesture-handler
+                ></a-video>
+            </a-marker>
+
+            <a-marker
+                type="pattern"
+                preset="custom"
+                url="assets/ayame_musume.patt"
+                vidhandler
+                smooth="true"
+                smoothCount="10"
+                smoothTolerance="0.01"
+                smoothThreshold="5"
+                raycaster="objects: .clickable"
+                emitevents="true"
+                cursor="fuse: false; rayOrigin: mouse;"
+                id="marker_ayame_musume"
+            >
+                <a-video
+                    src="#ayame_musume"
+                    scale="1.5 1 1"
+                    position="0 0.1 0"
+                    rotation="-90 0 0"
+                    class="clickable"
+                    gesture-handler
+                ></a-video>
+            </a-marker>
+
+
+            <a-marker
+                type="pattern"
+                preset="custom"
+                url="assets/kankou.patt"
+                vidhandler
+                smooth="true"
+                smoothCount="10"
+                smoothTolerance="0.01"
+                smoothThreshold="5"
+                raycaster="objects: .clickable"
+                emitevents="true"
+                cursor="fuse: false; rayOrigin: mouse;"
+                id="marker_kankou"
+            >
+                <a-video
+                    src="#kankou"
+                    scale="1.5 1 1"
+                    position="0 0.1 0"
+                    rotation="-90 0 0"
+                    class="clickable"
+                    gesture-handler
+                ></a-video>
+            </a-marker>
+
+            <a-marker
+                type="pattern"
+                preset="custom"
+                url="assets/fuji.patt"
+                vidhandler
+                smooth="true"
+                smoothCount="10"
+                smoothTolerance="0.01"
+                smoothThreshold="5"
+                raycaster="objects: .clickable"
+                emitevents="true"
+                cursor="fuse: false; rayOrigin: mouse;"
+                id="marker_fuji"
+            >
+                <a-video
+                    src="#fuji"
+                    scale="1 1.77 1"
+                    position="0 0.1 0"
+                    rotation="-90 0 0"
+                    class="clickable"
+                    gesture-handler
+                ></a-video>
+            </a-marker>
+
+            <a-marker
+                type="pattern"
+                preset="custom"
+                url="assets/night_iris.patt"
+                vidhandler
+                smooth="true"
+                smoothCount="10"
+                smoothTolerance="0.01"
+                smoothThreshold="5"
+                raycaster="objects: .clickable"
+                emitevents="true"
+                cursor="fuse: false; rayOrigin: mouse;"
+                id="marker_night_iris"
+            >
+                <a-video
+                    src="#night_iris"
+                    scale="1.5 1 1"
+                    position="0 0.1 0"
+                    rotation="-90 0 0"
+                    class="clickable"
+                    gesture-handler
+                ></a-video>
+            </a-marker>
+
+            <a-marker
+                type="pattern"
+                preset="custom"
+                url="assets/suiden.patt"
+                vidhandler
+                smooth="true"
+                smoothCount="10"
+                smoothTolerance="0.01"
+                smoothThreshold="5"
+                raycaster="objects: .clickable"
+                emitevents="true"
+                cursor="fuse: false; rayOrigin: mouse;"
+                id="marker_suiden"
+            >
+                <a-video
+                    src="#suiden"
                     scale="1 1 1"
                     position="0 0.1 0"
                     rotation="-90 0 0"
@@ -139,23 +372,25 @@
                     gesture-handler
                 ></a-image>
             </a-marker>
+
             <a-marker
                 type="pattern"
                 preset="custom"
-                url="assets/hanayome.patt"
+                url="assets/ayame_chan_marker.patt"
                 raycaster="objects: .clickable"
                 emitevents="true"
                 cursor="fuse: false; rayOrigin: mouse;"
-                id="markerB"
+                id="marker_ayame_chan"
             >
                 <a-image
-                    src="assets/yomeiri.jpeg"
+                    src="assets/ayame_chan.png"
                     scale="1 1 1"
                     class="clickable"
                     rotation="-90 0 0"
                     gesture-handler
                 ></a-image>
             </a-marker>
+
             <a-entity camera></a-entity>
         </a-scene>
     </body>
