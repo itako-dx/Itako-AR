@@ -10,15 +10,15 @@
     </head>
     <script>
         var count = 0;
+        const model = document.getElementById("model");
         function rotation () {
             setTimeout(()=>{
                 AFRAME.utils.entity.setComponentProperty(model, 'rotation', count+" 0 0");
                 count = count + 0.01;
                 rotation();
-            },100);
+            },10);
         }
         function init () {
-            const box = document.getElementById("model");
             rotation();
         }
     </script>
