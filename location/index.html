@@ -8,21 +8,7 @@
         <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar-nft.js"></script>
         <script src="https://raw.githack.com/donmccurdy/aframe-extras/master/dist/aframe-extras.loaders.min.js"></script>
     </head>
-    <script>
-        var count = 0;
-        const model = document.getElementById("model");
-        function rotation () {
-            setTimeout(()=>{
-                AFRAME.utils.entity.setComponentProperty(model, 'rotation', count+" 0 0");
-                count = count + 0.01;
-                rotation();
-            },10);
-        }
-        function init () {
-            rotation();
-        }
-    </script>
-    <body style="margin: 0; overflow: hidden;" onLoad="init();">
+    <body style="margin: 0; overflow: hidden;" >
         <a-scene
             renderer="logarithmicDepthBuffer: true;"
             embedded
@@ -35,6 +21,15 @@
                     id="animated-asset"
                     src="assets/asset.glb"
                 ></a-asset-item>
+                <a-animation
+                attribute="rotation"
+                from="20 0 0"
+                to="20 180 0"
+                direction="alternate"
+                dur="4000"
+                repeat="indefinite"
+                easing="ease">
+              </a-animation>
             </a-assets>
 
                 <a-entity
