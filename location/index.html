@@ -21,6 +21,14 @@
                     id="animated-asset"
                     src="assets/asset.glb"
                 ></a-asset-item>
+                <a-asset-item
+                    id="bunny-lamp-asset"
+                    src="assets/Bunny_Lamp.glb"
+                ></a-asset-item>
+                <a-asset-item
+                    id="penguinex-asset"
+                    src="assets/penguinex.glb"
+                ></a-asset-item>
             </a-assets>
 
                 <a-entity
@@ -32,6 +40,26 @@
                     position="0 -100 0"
                     animation="property: rotation; to: 0 360 0; dur: 4000; easing: linear; loop: true"
                     gps-entity-place="latitude: 35.948144024899264; longitude: 140.55633233208843;"
+                ></a-entity>
+                <a-entity
+                    id="model"
+                    look-at="[gps-camera]"
+                    animation-mixer="loop: repeat"
+                    gltf-model="#bunny-lamp-asset"
+                    scale="20 20 20"
+                    position="0 -100 0"
+                    animation="property: rotation; to: 0 360 0; dur: 4000; easing: linear; loop: true"
+                    gps-entity-place="latitude: 35.94649343918636; longitude: 140.55673455753475;"
+                ></a-entity>
+                <a-entity
+                    id="model"
+                    look-at="[gps-camera]"
+                    animation-mixer="loop: repeat"
+                    gltf-model="#penguinex-asset"
+                    scale="20 20 20"
+                    position="0 -100 0"
+                    animation="property: rotation; to: 0 360 0; dur: 4000; easing: linear; loop: true"
+                    gps-entity-place="latitude: 35.947747477287166; longitude: 140.55285706076054;"
                 ></a-entity>
 
             <a-camera gps-camera rotation-reader></a-camera>
