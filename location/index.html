@@ -44,6 +44,22 @@
               </a-animation>
             </a-entity>
 
+
+            <a-cube 
+                rotation="20 0 0"
+                gps-entity-place="latitude: 35.9471212723776; longitude: 140.55549280504738;"
+            >
+            <a-animation
+                attribute="rotation"
+                from="20 0 0"
+                to="20 180 0"
+                direction="alternate"
+                dur="4000"
+                repeat="indefinite"
+                easing="ease">
+            </a-animation>
+            </a-cube>
+
             <a-camera gps-camera rotation-reader arjs-look-controls='smoothingFactor: 0.1'></a-camera>
         </a-scene>
     </body>
