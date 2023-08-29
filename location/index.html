@@ -62,6 +62,37 @@
                     gps-entity-place="latitude: 35.947747477287166; longitude: 140.55285706076054;"
                 ></a-entity>
 
+                <a-entity
+                    id="model"
+                    look-at="[gps-camera]"
+                    animation-mixer="loop: repeat"
+                    gltf-model="#animated-asset"
+                    scale="20 20 20"
+                    position="0 -100 0"
+                    animation="property: rotation; to: 0 360 0; dur: 4000; easing: linear; loop: true"
+                    gps-entity-place="latitude: 35.66673980613478; longitude: 139.739440610229;"
+                ></a-entity>
+                <a-entity
+                    id="model"
+                    look-at="[gps-camera]"
+                    animation-mixer="loop: repeat"
+                    gltf-model="#bunny-lamp-asset"
+                    scale="3 3 3"
+                    position="0 -100 0"
+                    animation="property: rotation; to: 0 360 0; dur: 4000; easing: linear; loop: true"
+                    gps-entity-place="latitude: 35.66527545713158; longitude: 139.73394741402177;"
+                ></a-entity>
+                <a-entity
+                    id="model"
+                    look-at="[gps-camera]"
+                    animation-mixer="loop: repeat"
+                    gltf-model="#penguinex-asset"
+                    scale="20 20 20"
+                    position="0 -100 0"
+                    animation="property: rotation; to: 0 360 0; dur: 4000; easing: linear; loop: true"
+                    gps-entity-place="latitude: 35.662312222961624; longitude: 139.7385284290592;"
+                ></a-entity>
+
             <a-camera gps-camera rotation-reader></a-camera>
         </a-scene>
     </body>
