@@ -40,6 +40,8 @@
                         'event_category': 'AR Marker',
                         'event_label': event.target.id});
 
+                        seeMarker(event.target.id);
+
                         this.vid[event.target.id].play();
                     }.bind(this));
 
@@ -49,13 +51,58 @@
                 },
             });
 
+            function checkViewAll (view_count) {
+                if (view_count != 6) return;
+                const logoTitle = document.querySelector("#logoTitle");
+                const logoTitleAll = document.querySelector("#logoTitleAll");
+                logoTitle.parentNode.classList.add("hide");
+                logoTitleAll.parentNode.classList.remove("hide");
+            }
+
+            function seeMarker (key) {
+                const is_view = localStorage.getItem(key);
+                let view_count = localStorage.getItem('view_count');
+
+                // icon_key に変換
+                const icon_key = key.substr(7).concat("_icon");
+                const icon_dom = document.querySelector("#".concat(icon_key))
+                icon_dom.classList.remove("hide");
+                // これまでに表示していなかったら 表示済みをTrueにして表示種類を１上げる
+                if (!is_view) {
+                    localStorage.setItem(key, true);
+                    localStorage.setItem('view_count', ++view_count);
+                }
+                // 全部表示されたかのチェック
+                checkViewAll(view_count);
+            }
+
             function init () {
                 const marker = document.querySelector("#marker_ayame_chan");
                 marker.addEventListener('markerFound', function (event) {
                     gtag('event', 'Marker Found : marker_ayame_chan', {
                     'event_category': 'AR Marker',
                     'event_label': 'marker_ayame_chan'});
+                    seeMarker('marker_ayame_chan');
                 });
+                const view_count = localStorage.getItem('view_count');
+                if (!view_count) {
+                    localStorage.setItem('view_count', 0);
+                } else {
+                    checkViewAll(view_count);
+                }
+                
+                for(let key in localStorage) {
+                    if (!localStorage.hasOwnProperty(key)) {
+                        continue; // "setItem", "getItem" 他のキーをスキップ
+                    }
+                    // アイコン表示の設定を取得
+                    if (key.includes("icon")){
+                        // 表示されたことがあるなら 対象のアイコンを表示する
+                        if (localStorage.getItem(key)){
+                            document.querySelector("#".concat(key)).classList.remove("hide");
+                        }
+                    }
+                }
             }
         </script>
         <style type="text/css">
@@ -75,13 +122,111 @@
             overflow: hidden;
             white-space: nowrap;
         }
+        #logoTitleAll a {
+            display: block;
+            width: 196px;
+            height: 62px;
+            background: url(../assets/header/logo_title_all.png) 0 0 no-repeat;
+            text-indent: 150%;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+        #markerInner {
+            width: 320px;
+            height: 64px;
+            position: absolute;
+            display: inline-block;
+            top: 52px;
+            left: 10px;
+        }
+        #markerInner div#ayame_chan_icon {
+            display: inline-block;
+            width: 64px;
+            height: 64px;
+            background: url(../assets/header/ayame_icon.png) 0 0 no-repeat;
+            text-indent: 150%;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+        #markerInner div#ayame_musume_icon {
+            display: inline-block;
+            width: 64px;
+            height: 64px;
+            background: url(../assets/header/ayame_musume_icon.png) 0 0 no-repeat;
+            text-indent: 150%;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+        #markerInner div#fuji_icon {
+            display: inline-block;
+            width: 64px;
+            height: 64px;
+            background: url(../assets/header/fuji_icon.png) 0 0 no-repeat;
+            text-indent: 150%;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+        #markerInner div#hanayome_icon {
+            display: inline-block;
+            width: 64px;
+            height: 64px;
+            background: url(../assets/header/hanayome_icon.png) 0 0 no-repeat;
+            text-indent: 150%;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+        #markerInner div#kankou_icon {
+            display: inline-block;
+            width: 64px;
+            height: 64px;
+            background: url(../assets/header/kankou_icon.png) 0 0 no-repeat;
+            text-indent: 150%;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+        #markerInner div#night_iris_icon {
+            display: inline-block;
+            width: 64px;
+            height: 64px;
+            background: url(../assets/header/night_iris_icon.png) 0 0 no-repeat;
+            text-indent: 150%;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+
+        .hide {
+            display:none;
+        }
         </style>
     </head>
 
     <body style="margin: 0; overflow: hidden;" onLoad="init();">
         <header id="header">
-            <div id="headerInner">
+            <div class="headerInner">
                 <h1 id="logoTitle"><a href="/" title="TOP">TOP</a></h1>
+            </div>
+            <div class="headerInner hide">
+                <h1 id="logoTitleAll"><a href="/" title="TOP">TOP</a></h1>
+            </div>
+            <div id="markerInner">
+                <div id="ayame_chan_icon">
+                    &nbsp;
+                </div>
+                <div id="ayame_musume_icon" class="hide">
+                    &nbsp;
+                </div>
+                <div id="fuji_icon" class="hide">
+                    &nbsp;
+                </div>
+                <div id="hanayome_icon" class="hide">
+                    &nbsp;
+                </div>
+                <div id="kankou_icon" class="hide">
+                    &nbsp;
+                </div>
+                <div id="night_iris_icon" class="hide">
+                    &nbsp;
+                </div>
             </div>
         </header>
 
