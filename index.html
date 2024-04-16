@@ -39,7 +39,8 @@
                         'event_category': 'AR Marker',
                         'event_label': event.target.id});
 
-                        seeMarker(event.target.id);
+                        const icon_key = event.target.id.substr(7).concat("_icon");
+                        seeMarker(icon_key);
 
                         this.vid[event.target.id].play();
                     }.bind(this));
@@ -59,12 +60,10 @@
             }
 
             function seeMarker (key) {
+                // icon_key に変換
+                const icon_dom = document.querySelector("#".concat(key));
                 const is_view = localStorage.getItem(key);
                 let view_count = localStorage.getItem('view_count');
-
-                // icon_key に変換
-                const icon_key = key.substr(7).concat("_icon");
-                const icon_dom = document.querySelector("#".concat(icon_key))
                 icon_dom.classList.remove("hide");
                 // これまでに表示していなかったら 表示済みをTrueにして表示種類を１上げる
                 if (!is_view) {
@@ -81,7 +80,7 @@
                     gtag('event', 'Marker Found : marker_ayame_chan', {
                     'event_category': 'AR Marker',
                     'event_label': 'marker_ayame_chan'});
-                    seeMarker('marker_ayame_chan');
+                    seeMarker('ayame_chan_icon');
                 });
                 const view_count = localStorage.getItem('view_count');
                 if (!view_count) {
@@ -98,14 +97,14 @@
                     if (key.includes("icon")){
                         // 表示されたことがあるなら 対象のアイコンを表示する
                         if (localStorage.getItem(key)){
-                            document.querySelector("#".concat(key)).classList.remove("hide");
+                            seeMarker(key);
                         }
                     }
                 }
             }
         </script>
         <style type="text/css">
-        #logoTitle {
+        #logoTitle, #logoTitleAll {
             width: 196px;
             height: 62px;
             position: absolute;
@@ -132,7 +131,7 @@
         }
         #markerInner {
             width: 420px;
-            height: 64px;
+            height: 32px;
             position: absolute;
             display: inline-block;
             top: 84px;
@@ -140,60 +139,60 @@
         }
         #markerInner div#ayame_chan_icon {
             display: inline-block;
-            width: 64px;
-            height: 64px;
+            width: 32px;
+            height: 32px;
             background: url(../assets/header/ayame_icon.png) 0 0 no-repeat;
-            background-size:64px;
+            background-size:32px;
             text-indent: 150%;
             overflow: hidden;
             white-space: nowrap;
         }
         #markerInner div#ayame_musume_icon {
             display: inline-block;
-            width: 64px;
-            height: 64px;
+            width: 32px;
+            height: 32px;
             background: url(../assets/header/ayame_musume_icon.png) 0 0 no-repeat;
-            background-size:64px;
+            background-size:32px;
             text-indent: 150%;
             overflow: hidden;
             white-space: nowrap;
         }
         #markerInner div#fuji_icon {
             display: inline-block;
-            width: 64px;
-            height: 64px;
+            width: 32px;
+            height: 32px;
             background: url(../assets/header/fuji_icon.png) 0 0 no-repeat;
-            background-size:64px;
+            background-size:32px;
             text-indent: 150%;
             overflow: hidden;
             white-space: nowrap;
         }
         #markerInner div#hanayome_icon {
             display: inline-block;
-            width: 64px;
-            height: 64px;
+            width: 32px;
+            height: 32px;
             background: url(../assets/header/hanayome_icon.png) 0 0 no-repeat;
-            background-size:64px;
+            background-size:32px;
             text-indent: 150%;
             overflow: hidden;
             white-space: nowrap;
         }
         #markerInner div#kankou_icon {
             display: inline-block;
-            width: 64px;
-            height: 64px;
+            width: 32px;
+            height: 32px;
             background: url(../assets/header/kankou_icon.png) 0 0 no-repeat;
-            background-size:64px;
+            background-size:32px;
             text-indent: 150%;
             overflow: hidden;
             white-space: nowrap;
         }
         #markerInner div#night_iris_icon {
             display: inline-block;
-            width: 64px;
-            height: 64px;
+            width: 32px;
+            height: 32px;
             background: url(../assets/header/night_iris_icon.png) 0 0 no-repeat;
-            background-size:64px;
+            background-size:32px;
             text-indent: 150%;
             overflow: hidden;
             white-space: nowrap;
